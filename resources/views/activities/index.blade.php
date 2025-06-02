@@ -117,10 +117,9 @@
                                             <div>
                                                 <a href="{{ route('activities.show', $activity) }}" class="text-decoration-none fw-bold">
                                                     {{ $activity->title }}
-                                                </a>
-                                                @if($activity->description)
+                                                </a>                                                @if($activity->description)
                                                     <div class="small text-muted">
-                                                        {{ Str::limit($activity->description, 80) }}
+                                                        {{ strlen($activity->description) > 80 ? substr($activity->description, 0, 80) . '...' : $activity->description }}
                                                     </div>
                                                 @endif
                                             </div>
