@@ -32,7 +32,8 @@ Route::middleware(['auth'])->group(function () {
     
     // Reports Routes
     Route::get('/reports', [ReportController::class, 'index'])->name('reports.index');
-    Route::post('/reports/generate', [ReportController::class, 'generate'])->name('reports.generate');
+    Route::post('/reports/generate', [ReportController::class, 'generateFilteredReport'])->name('reports.generate');
+    Route::get('/reports/activity/{id}/history', [ReportController::class, 'showActivityHistory'])->name('reports.activity.history');
     Route::get('/reports/export', [ReportController::class, 'export'])->name('reports.export');
     
     // AJAX Routes for dashboard

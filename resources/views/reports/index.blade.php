@@ -205,13 +205,24 @@
                             <option value="excel">Excel</option>
                         </select>
                     </div>
-                    
-                    <div class="mb-3">
+                      <div class="mb-3">
                         <label for="export_data" class="form-label">Data to Export</label>
                         <select class="form-select" id="export_data" name="export_data">
-                            <option value="activities">Activities</option>
-                            <option value="updates">Activity Updates</option>
-                            <option value="both">Both Activities and Updates</option>
+                            <option value="all">All Activities</option>
+                            <option value="filtered">Recent Activities (Last 30 Days)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="duration" class="form-label">Date Range (for filtered export)</label>
+                        <select class="form-select" id="duration" name="duration">
+                            <option value="today">Today</option>
+                            <option value="last_7_days">Last 7 Days</option>
+                            <option value="last_30_days" selected>Last 30 Days</option>
+                            <option value="last_90_days">Last 90 Days</option>
+                            <option value="this_month">This Month</option>
+                            <option value="last_month">Last Month</option>
+                            <option value="this_year">This Year</option>
                         </select>
                     </div>
                 </div>
