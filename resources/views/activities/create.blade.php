@@ -5,14 +5,13 @@
 @endphp
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-header">
-                    <h4 class="mb-0">
-                        <i class="fas fa-plus-circle me-2"></i>Create New Activity
-                    </h4>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header">
+                <h4 class="mb-0">
+                    <i class="fas fa-plus-circle me-2"></i>Create New Activity
+                </h4>
                 </div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('activities.store') }}">
@@ -122,13 +121,11 @@
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fas fa-save me-1"></i>Create Activity
                                     </button>
-                                </div>
-                            </div>
+                                </div>                            </div>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-</div>
 @endsection

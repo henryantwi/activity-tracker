@@ -49,11 +49,13 @@
                                     <i class="fas fa-exchange-alt me-1"></i>Handovers
                                 </a>
                             </li>
+                            @if(auth()->user()->isAdmin() || auth()->user()->isManager())
                             <li class="nav-item">
                                 <a class="nav-link @if(request()->routeIs('reports.*')) active @endif" href="{{ route('reports.index') }}">
                                     <i class="fas fa-chart-bar me-1"></i>Reports
                                 </a>
                             </li>
+                            @endif
                         @endauth
                     </ul>
 
@@ -126,9 +128,9 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 @endif
+                
+                @yield('content')
             </div>
-            
-            @yield('content')
         </main>
     </div>
 </body>

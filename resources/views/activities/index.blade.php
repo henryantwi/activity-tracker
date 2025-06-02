@@ -5,29 +5,28 @@
 @endphp
 
 @section('content')
-<div class="container-fluid">
-    <!-- Activities Header -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h1 class="h3 mb-0">Activities</h1>
-                    <p class="text-muted mb-0">Manage and track all work activities</p>
-                </div>
-                <div>
-                    <a href="{{ route('activities.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus me-1"></i>New Activity
-                    </a>
-                </div>
+<!-- Activities Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="h3 mb-0">Activities</h1>
+                <p class="text-muted mb-0">Manage and track all work activities</p>
+            </div>
+            <div>
+                <a href="{{ route('activities.create') }}" class="btn btn-primary">
+                    <i class="fas fa-plus me-1"></i>New Activity
+                </a>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Filters -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
+<!-- Filters -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
                     <form method="GET" action="{{ route('activities.index') }}" class="row g-3">
                         <div class="col-md-3">
                             <label for="status" class="form-label">Status</label>
@@ -232,10 +231,8 @@
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">Delete</button>
                 </form>
-            </div>
-        </div>
+            </div>        </div>
     </div>
-</div>
 
 <script>
 function confirmDelete(activityId) {

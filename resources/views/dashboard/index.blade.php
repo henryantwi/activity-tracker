@@ -5,29 +5,28 @@
 @endphp
 
 @section('content')
-<div class="container-fluid">
-    <!-- Dashboard Header -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h1 class="h3 mb-0">Dashboard</h1>
-                    <p class="text-muted mb-0">Welcome back, {{ auth()->user()->name }}!</p>
-                </div>
-                <div>
-                    <a href="{{ route('activities.create') }}" class="btn btn-primary">
-                        <i class="fas fa-plus me-1"></i>New Activity
-                    </a>
-                </div>
+<!-- Dashboard Header -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="h3 mb-0">Dashboard</h1>
+                <p class="text-muted mb-0">Welcome back, {{ auth()->user()->name }}!</p>
+            </div>
+            <div>
+                <a href="{{ route('activities.create') }}" class="btn btn-primary">
+                    <i class="fas fa-plus me-1"></i>New Activity
+                </a>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- Statistics Cards -->
-    <div class="row mb-4">
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
@@ -158,7 +157,7 @@
                                     <tr>
                                         <td>
                                             <a href="{{ route('activities.show', $activity) }}" class="text-decoration-none">
-                                                {{ Str::limit($activity->title, 50) }}
+                                                {{ strlen($activity->title) > 50 ? substr($activity->title, 0, 50) . '...' : $activity->title }}
                                             </a>
                                         </td>
                                         <td>
@@ -222,7 +221,7 @@
                             <select class="form-select" id="activity_select" name="activity_id">
                                 <option value="">Choose an activity...</option>
                                 @foreach($todayActivities->where('status', '!=', 'completed') as $activity)
-                                    <option value="{{ $activity->id }}">{{ Str::limit($activity->title, 40) }}</option>
+                                    <option value="{{ $activity->id }}">{{ strlen($activity->title) > 40 ? substr($activity->title, 0, 40) . '...' : $activity->title }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -265,11 +264,11 @@
                                     <div class="flex-grow-1 ms-3">
                                         <div class="fw-bold">{{ $update->user->name }}</div>
                                         <div class="small text-muted">
-                                            Updated "{{ Str::limit($update->activity->title, 30) }}" to 
+                                            Updated "{{ strlen($activity->title) > 30 ? substr($activity->title, 0, 30) . '...' : $activity->title }}" to 
                                             <span class="badge bg-{{ $update->status_color }}">{{ ucfirst($update->status) }}</span>
                                         </div>
                                         @if($update->remarks)
-                                            <div class="small text-muted fst-italic">{{ Str::limit($update->remarks, 50) }}</div>
+                                            <div class="small text-muted fst-italic">{{ strlen($update->remarks) > 50 ? substr($update->remarks, 0, 50) . '...' : $update->remarks }}</div>
                                         @endif
                                         <div class="small text-muted">{{ $update->update_time->diffForHumans() }}</div>
                                     </div>
@@ -313,9 +312,8 @@
                             <tbody>
                                 @foreach($overdueActivities as $activity)
                                 <tr>
-                                    <td>
-                                        <a href="{{ route('activities.show', $activity) }}" class="text-decoration-none">
-                                            {{ Str::limit($activity->title, 50) }}
+                                    <td>                                        <a href="{{ route('activities.show', $activity) }}" class="text-decoration-none">
+                                            {{ strlen($activity->title) > 50 ? substr($activity->title, 0, 50) . '...' : $activity->title }}
                                         </a>
                                     </td>
                                     <td>{{ $activity->due_date->format('M d, Y') }}</td>
@@ -343,10 +341,8 @@
             </div>
         </div>
     </div>
-    @endif
-
-    <!-- Admin Section -->
-    @if(auth()->user()->is_admin && $pendingHandovers->count() > 0)
+    @endif    <!-- Admin/Manager Section -->
+    @if((auth()->user()->isAdmin() || auth()->user()->isManager()) && $pendingHandovers->count() > 0)
     <div class="row mt-4">
         <div class="col-12">
             <div class="card shadow border-left-info">
@@ -380,8 +376,7 @@
                                         </button>
                                     </td>
                                 </tr>
-                                @endforeach
-                            </tbody>
+                                @endforeach                            </tbody>
                         </table>
                     </div>
                 </div>
@@ -389,7 +384,6 @@
         </div>
     </div>
     @endif
-</div>
 
 <style>
 .border-left-primary {

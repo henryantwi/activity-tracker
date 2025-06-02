@@ -8,9 +8,22 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
+    public function __construct()
+    {
+        // Only admins and managers can access reports
+        $this->middleware(function ($request, $next) {
+            $user = Auth::user();
+            if (!$user || (!$user->isAdmin() && !$user->isManager())) {
+                abort(403, 'You are not authorized to access reports');
+            }
+            return $next($request);
+        });
+    }
+
     public function index()
     {
         // Quick report stats

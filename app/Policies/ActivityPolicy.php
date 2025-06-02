@@ -13,7 +13,8 @@ class ActivityPolicy
      */
     public function viewAny(User $user): bool
     {
-        return false;
+        // All authenticated users can view activities (filtered in controller)
+        return true;
     }
 
     /**
@@ -21,7 +22,13 @@ class ActivityPolicy
      */
     public function view(User $user, Activity $activity): bool
     {
-        return false;
+        // Admins can view all activities
+        if ($user->is_admin) {
+            return true;
+        }
+        
+        // Users can view activities they created or are assigned to
+        return $activity->created_by === $user->id || $activity->assigned_to === $user->id;
     }
 
     /**
@@ -29,7 +36,8 @@ class ActivityPolicy
      */
     public function create(User $user): bool
     {
-        return false;
+        // All authenticated users can create activities
+        return true;
     }
 
     /**
@@ -37,7 +45,13 @@ class ActivityPolicy
      */
     public function update(User $user, Activity $activity): bool
     {
-        return false;
+        // Admins can update all activities
+        if ($user->is_admin) {
+            return true;
+        }
+        
+        // Users can update activities they created or are assigned to
+        return $activity->created_by === $user->id || $activity->assigned_to === $user->id;
     }
 
     /**
@@ -45,7 +59,13 @@ class ActivityPolicy
      */
     public function delete(User $user, Activity $activity): bool
     {
-        return false;
+        // Admins can delete all activities
+        if ($user->is_admin) {
+            return true;
+        }
+        
+        // Only creators can delete their own activities
+        return $activity->created_by === $user->id;
     }
 
     /**
@@ -53,7 +73,8 @@ class ActivityPolicy
      */
     public function restore(User $user, Activity $activity): bool
     {
-        return false;
+        // Same logic as delete
+        return $this->delete($user, $activity);
     }
 
     /**
@@ -61,6 +82,7 @@ class ActivityPolicy
      */
     public function forceDelete(User $user, Activity $activity): bool
     {
-        return false;
+        // Only admins can force delete
+        return $user->is_admin;
     }
 }

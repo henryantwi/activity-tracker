@@ -5,29 +5,28 @@
 @endphp
 
 @section('content')
-<div class="container-fluid">
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h1 class="h3 mb-0">Reports</h1>
-                    <p class="text-muted mb-0">Generate and view activity reports</p>
-                </div>
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1 class="h3 mb-0">Reports</h1>
+                <p class="text-muted mb-0">Generate and view activity reports</p>
             </div>
         </div>
     </div>
+</div>
 
-    <div class="row">
-        <!-- Quick Report Cards -->
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow">
-                <div class="card-body text-center">
-                    <i class="fas fa-calendar-day fa-3x text-primary mb-3"></i>
-                    <h5 class="card-title">Daily Report</h5>
-                    <p class="card-text">View today's activity summary and updates</p>
-                    <a href="{{ route('reports.index', ['type' => 'daily']) }}" class="btn btn-primary">
-                        View Daily Report
-                    </a>
+<div class="row">
+    <!-- Quick Report Cards -->
+    <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow">
+            <div class="card-body text-center">
+                <i class="fas fa-calendar-day fa-3x text-primary mb-3"></i>
+                <h5 class="card-title">Daily Report</h5>
+                <p class="card-text">View today's activity summary and updates</p>
+                <a href="{{ route('reports.index', ['type' => 'daily']) }}" class="btn btn-primary">
+                    View Daily Report
+                </a>
                 </div>
             </div>
         </div>
@@ -97,8 +96,7 @@
                                 <h4 class="text-danger">{{ $stats['overdue_activities'] ?? 0 }}</h4>
                                 <small class="text-muted">Overdue</small>
                             </div>
-                        </div>
-                        <div class="col-md-2">
+                        </div>                        <div class="col-md-2">
                             <div class="border rounded p-3">
                                 <h4 class="text-secondary">{{ $stats['active_users_today'] ?? 0 }}</h4>
                                 <small class="text-muted">Active Users</small>
@@ -109,7 +107,6 @@
             </div>
         </div>
     </div>
-</div>
 
 <!-- Custom Report Modal -->
 <div class="modal fade" id="customReportModal" tabindex="-1" aria-labelledby="customReportModalLabel" aria-hidden="true">

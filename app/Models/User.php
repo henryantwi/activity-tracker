@@ -21,6 +21,7 @@ class User extends Authenticatable
         'position',
         'bio',
         'is_admin',
+        'role',
     ];
 
     protected $hidden = [
@@ -70,6 +71,47 @@ class User extends Authenticatable
     public function scopeAdmins($query)
     {
         return $query->where('is_admin', true);
+    }
+
+    public function scopeByRole($query, $role)
+    {
+        return $query->where('role', $role);
+    }
+
+    public function scopeManagers($query)
+    {
+        return $query->where('role', 'manager');
+    }
+
+    // Role-based methods
+    public function isAdmin()
+    {
+        return $this->role === 'admin' || $this->is_admin;
+    }
+
+    public function isManager()
+    {
+        return $this->role === 'manager';
+    }
+
+    public function isUser()
+    {
+        return $this->role === 'user';
+    }
+
+    public function canManageReports()
+    {
+        return $this->isAdmin() || $this->isManager();
+    }
+
+    public function canSearchAllActivities()
+    {
+        return $this->isAdmin() || $this->isManager();
+    }
+
+    public function canViewAllUpdates()
+    {
+        return $this->isAdmin() || $this->isManager();
     }
 
     // Methods

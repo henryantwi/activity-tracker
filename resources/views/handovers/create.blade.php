@@ -114,7 +114,7 @@
                                                     <td>
                                                         <strong>{{ $activity->title }}</strong>
                                                         @if($activity->description)
-                                                            <br><small class="text-muted">{{ Str::limit($activity->description, 50) }}</small>
+                                                            <br><small class="text-muted">{{ strlen($activity->description) > 50 ? substr($activity->description, 0, 50) . '...' : $activity->description }}</small>
                                                         @endif
                                                     </td>
                                                     <td>

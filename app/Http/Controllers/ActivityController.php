@@ -52,8 +52,8 @@ class ActivityController extends Controller
             });
         }
         
-        // If not admin, show only user's activities
-        if (!Auth::user()->is_admin) {
+        // If not admin or manager, show only user's activities
+        if (!Auth::user()->canSearchAllActivities()) {
             $query->where(function($q) {
                 $q->where('assigned_to', Auth::id())
                   ->orWhere('created_by', Auth::id());
@@ -94,7 +94,7 @@ class ActivityController extends Controller
             abort(401, 'User not authenticated');
         }
         
-        if (!$user->is_admin && $activity->created_by !== $user->id && $activity->assigned_to !== $user->id) {
+        if (!$user->canSearchAllActivities() && $activity->created_by !== $user->id && $activity->assigned_to !== $user->id) {
             abort(403, 'You are not authorized to view this activity');
         }
         
@@ -118,7 +118,7 @@ class ActivityController extends Controller
         }
         
         // Check authorization explicitly
-        if (!$user->is_admin && $activity->created_by !== $user->id && $activity->assigned_to !== $user->id) {
+        if (!$user->canSearchAllActivities() && $activity->created_by !== $user->id && $activity->assigned_to !== $user->id) {
             abort(403, 'You are not authorized to edit this activity');
         }
         
@@ -135,7 +135,7 @@ class ActivityController extends Controller
             abort(401, 'User not authenticated');
         }
         
-        if (!$user->is_admin && $activity->created_by !== $user->id && $activity->assigned_to !== $user->id) {
+        if (!$user->isAdmin() && !$user->isManager() && $activity->created_by !== $user->id && $activity->assigned_to !== $user->id) {
             abort(403, 'You are not authorized to update this activity');
         }
         
@@ -168,8 +168,8 @@ class ActivityController extends Controller
             abort(401, 'User not authenticated');
         }
         
-        // Only admins or creators can delete activities
-        if (!$user->is_admin && $activity->created_by !== $user->id) {
+        // Only admins, managers, or creators can delete activities
+        if (!$user->isAdmin() && !$user->isManager() && $activity->created_by !== $user->id) {
             abort(403, 'You are not authorized to delete this activity');
         }
         
@@ -187,7 +187,7 @@ class ActivityController extends Controller
             abort(401, 'User not authenticated');
         }
         
-        if (!$user->is_admin && $activity->created_by !== $user->id && $activity->assigned_to !== $user->id) {
+        if (!$user->isAdmin() && !$user->isManager() && $activity->created_by !== $user->id && $activity->assigned_to !== $user->id) {
             abort(403, 'You are not authorized to update this activity');
         }
         

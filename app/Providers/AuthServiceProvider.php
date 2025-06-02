@@ -10,14 +10,13 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
-{
-    /**
+{    /**
      * The model to policy mappings for the application.
      *
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        Activity::class => ActivityPolicy::class,
+        // Activity::class => ActivityPolicy::class, // Disabled - using explicit checks in controller
         DailyHandover::class => DailyHandoverPolicy::class,
     ];
 

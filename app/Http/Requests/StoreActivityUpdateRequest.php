@@ -10,9 +10,11 @@ class StoreActivityUpdateRequest extends FormRequest
     public function authorize()
     {
         $activity = $this->route('activity');
+        $user = auth()->user();
         
-        // Allow if user is admin, creator, or assignee
-        return auth()->user()->is_admin || 
+        // Allow if user is admin, manager, creator, or assignee
+        return $user->isAdmin() || 
+               $user->isManager() ||
                $activity->created_by === auth()->id() || 
                $activity->assigned_to === auth()->id();
     }
